@@ -1,28 +1,49 @@
 import React from 'react'
+import { UPDATE_BLOG_DATA } from '../../constants/apiEndPoints'
 import icon1 from "../../Icons/clapping.svg"
 import icon2 from "../../Icons/heart-black.svg"
 import icon3 from "../../Icons/heart-red.svg"
+import makeRequest from '../../utils/makeRequest'
+import { getFormattedDateFromUtcDate } from "../../utils/common"
 
 const Card = ({ item }) => {
 
   const [clapCount, setClapCount] = React.useState(item.claps);
-  const [like, setLike] = React.useState(false);
+  const [like, setLike] = React.useState(item.liked);
 
-  const increaseClapCount = () => {
-    setClapCount(clapCount + 1);
+  const increaseClapCount = async () => {
+    try{
+      await makeRequest(UPDATE_BLOG_DATA(item.id), {
+        data: {claps: clapCount+1},
+      })
+      setClapCount(clapCount + 1);
+    }
+    catch(e) {
+      // 
+    }
+    
   }
 
-  const changeLike = () => {
-    setLike(!like);
+  const changeLike = async () => {
+    try{
+      await makeRequest(UPDATE_BLOG_DATA(item.id), {
+        data: {liked: !like},
+      })
+      setLike(!like);
+    }
+    catch(e) {
+      // 
+    }
   }
 
   return (
 
     <div className='card'>
-      <img className='card-img' src={require(`../../Images/${item.image}`)} alt="abstract" />
+      {/* <img className='card-img' src={require(`../../Images/${item.image}`)} alt="abstract" /> */}
+      <img className='card-img' src={item.image} alt="abstract" />
 
       <div className="date-time">
-        <p>{item.date}</p>
+        <p>{getFormattedDateFromUtcDate(item.date)}</p>
         <p>{item.readingTime}</p>
       </div>
 
