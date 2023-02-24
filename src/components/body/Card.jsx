@@ -38,8 +38,8 @@ const Card = ({ item }) => {
 
   return (
 
-    <div className='card'>
-      {/* <img className='card-img' src={require(`../../Images/${item.image}`)} alt="abstract" /> */}
+    <div className='card' data-testid = 'card-test'>
+
       <img className='card-img' src={item.image} alt="abstract" />
 
       <div className="date-time">
@@ -61,15 +61,8 @@ const Card = ({ item }) => {
         </div>
 
         <div className='like'>
-
-          {
-            !like && <img className="icon-img" src={icon2} alt="heart" onClick={changeLike} />
-          }
-          {
-            like && <img className="icon-img" src={icon3} alt="heart" onClick={changeLike} />
-
-          }
-
+          { !like && <img className="icon-img" src={icon2} alt="heart" onClick={changeLike} /> }
+          {  like && <img className="icon-img" src={icon3} alt="heart" onClick={changeLike} /> }
         </div>
 
       </div>

@@ -6,13 +6,17 @@ import makeRequest from "../../utils/makeRequest"
 
 const Body = () => {
 
-  const [blogData, setBlogData] = React.useState([]);
+  const [blogData, setBlogData] = React.useState();
   const [error, setError] = React.useState();
 
   React.useEffect(() => {
     makeRequest(GET_BLOG_DATA)
     .then((response) => setBlogData(response))
-    .catch((e) => setError(e.message));
+    .catch((e) => {
+      console.log(e)
+      console.log(e.message)
+      setError(e.message)
+    });
   }, []);
   if(error){
     return (
@@ -35,7 +39,7 @@ const Body = () => {
     </div>
   ) : (
     <div className="blogDataLoader">
-      <p>Loading...</p>
+      <p>Loading</p>
     </div>
   )
   
